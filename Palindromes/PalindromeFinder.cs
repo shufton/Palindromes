@@ -2,9 +2,17 @@
 
 namespace Palindromes
 {
-    internal class PalindromeFinder
+    // Palindromes may have different rulles in different languages
+    // So extract an interface to allow alternative implementations
+    // of the finding algorithm to be used.
+    public interface IPalindromeFinder
     {
-        internal bool IsPalindrome(string inputString)
+        bool IsPalindrome(string inputString);
+    }
+
+    internal class PalindromeFinder : IPalindromeFinder
+    {
+        public bool IsPalindrome(string inputString)
         {
             if(String.IsNullOrEmpty(inputString))
                 throw new ArgumentException("A valid string must be passed to IsPalindrome.",nameof(inputString));
