@@ -19,7 +19,7 @@ namespace Palindromes
             // We reverse the comaprsion for length, as longer means a better palindrome
             // so should appear first
             var comparison = other.Palindrome.Length.CompareTo(Palindrome.Length);
-            return 0 == comparison ? other.StartIndex.CompareTo(StartIndex) : comparison;
+            return 0 == comparison ? StartIndex.CompareTo(other.StartIndex) : comparison;
         }
 
         public int CompareTo(object obj)

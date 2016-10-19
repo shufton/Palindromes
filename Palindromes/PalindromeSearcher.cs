@@ -44,11 +44,13 @@ namespace Palindromes
             var results = new List<PalindromeResult>();
 
             var inputLength = inputString.Length - 1;
-            for (var startPos = 0; startPos < inputLength; ++startPos)
+            for (var startPos = 0; startPos < inputLength;)
             {
                 var endPos = FindPossibleSubstring(inputString, startPos, inputLength);
                 if (ScanSubstring(inputString, endPos, startPos, results))
-                    startPos = endPos;
+                    startPos = startPos + ((endPos - startPos+1) / 2);
+                else
+                    ++startPos;
             }
 
             results.Sort();
@@ -62,11 +64,11 @@ namespace Palindromes
                 var substring = inputString.Substring(startPos, endPos - startPos + 1);
                 if (_finder.IsPalindrome(substring))
                 {
-                    results.Add(new PalindromeResult { Palindrome = substring, StartIndex = startPos, EndIndex = endPos });
+                    results.Add(new PalindromeResult {Palindrome = substring, StartIndex = startPos, EndIndex = endPos});
                     return true;
                 }
 
-                endPos = FindPossibleSubstring(inputString, startPos, endPos);
+                endPos = FindPossibleSubstring(inputString, startPos, endPos-1);
             }
             return false;
         }

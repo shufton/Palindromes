@@ -139,9 +139,35 @@ namespace PalindromesTests
             var results = searcher.FindPalindromes("sqrrqabccbatudefggfedvwhijkllkjihxymnnmzpop");
 
             Assert.AreEqual(6, results.Count);
-            Assert.AreEqual(results[0], new PalindromeResult { Palindrome = "hijkllkjih", StartIndex = 23, EndIndex = 32 });
-            Assert.AreEqual(results[1], new PalindromeResult { Palindrome = "defggfed", StartIndex = 13, EndIndex = 20 });
-            Assert.AreEqual(results[2], new PalindromeResult { Palindrome = "abccba", StartIndex = 5, EndIndex = 10 });
+            Assert.AreEqual(new PalindromeResult { Palindrome = "hijkllkjih", StartIndex = 23, EndIndex = 32 },results[0]);
+            Assert.AreEqual(new PalindromeResult { Palindrome = "defggfed", StartIndex = 13, EndIndex = 20 }, results[1]);
+            Assert.AreEqual(new PalindromeResult { Palindrome = "abccba", StartIndex = 5, EndIndex = 10 }, results[2]);
+        }
+
+        [TestMethod]
+        public void FindPalindromes_OverlappingOddPalindromes_FindsAllPalindromes()
+        {
+            var finder = new PalindromeFinder();
+            var searcher = new PalindromeSearcher(finder);
+
+            var results = searcher.FindPalindromes("1232123");
+
+            Assert.AreEqual(2, results.Count);
+            Assert.AreEqual(new PalindromeResult { Palindrome = "12321", StartIndex = 0, EndIndex = 4 }, results[0]);
+            Assert.AreEqual(new PalindromeResult { Palindrome = "32123", StartIndex = 2, EndIndex = 6 }, results[1]);
+        }
+
+        [TestMethod]
+        public void FindPalindromes_OverlappingEvenPalindromes_FindsAllPalindromes()
+        {
+            var finder = new PalindromeFinder();
+            var searcher = new PalindromeSearcher(finder);
+
+            var results = searcher.FindPalindromes("123321123");
+
+            Assert.AreEqual(2, results.Count);
+            Assert.AreEqual(new PalindromeResult { Palindrome = "123321", StartIndex = 0, EndIndex = 5 }, results[0]);
+            Assert.AreEqual(new PalindromeResult { Palindrome = "321123", StartIndex = 3, EndIndex = 8 }, results[1]);
         }
     }
 }
